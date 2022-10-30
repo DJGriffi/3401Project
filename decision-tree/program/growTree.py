@@ -48,6 +48,7 @@ def calculateEntropy(M, uniqueAttrValues, uniqueAttrOccur):
     print()
     print(uniqueAttrValues)
     print(uniqueAttrOccur)
+    print()
     entropies = []
     for i in range(0, len(uniqueAttrValues)):
         probabilities = []
