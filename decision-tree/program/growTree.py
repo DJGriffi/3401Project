@@ -52,14 +52,14 @@ def calculateEntropy(M, uniqueAttrValues, uniqueAttrOccur, attributeList, n):
     print()
     print(uniqueAttrValues)
     print(uniqueAttrOccur)
-    print()
+    # print()
     entropies = []
-    print("LENGTH OF UNIQUEATTR %d" % len(uniqueAttrOccur))
+    # print("LENGTH OF UNIQUEATTR %d" % len(uniqueAttrOccur))
     for i in range(0, len(uniqueAttrOccur)):
         probabilities = []
         if (len(occurrence_count) != (len(uniqueAttrOccur) * 2)):
         # if ((len(occurrence_count) % 2) != 0):
-            print("HERE!!!!!!!!!!!!!!!!!!!!!")
+            # print("HERE!!!!!!!!!!!!!!!!!!!!!")
             # print(len(unique_values[0]))
             domain = attributeList[n][1]
             index = []
@@ -73,32 +73,32 @@ def calculateEntropy(M, uniqueAttrValues, uniqueAttrOccur, attributeList, n):
                         valIndex = j
                 if (count != 2):
                     index.append(valIndex)
-                    print("Domain: ", domain)
-                    print("Domain Value: ", v)
-                    print("Attr Occurance: " ,uniqueAttrOccur)
-                    print("Unique Value Pairs : ", unique_values)
+                    # print("Domain: ", domain)
+                    # print("Domain Value: ", v)
+                    # print("Attr Occurance: " ,uniqueAttrOccur)
+                    # print("Unique Value Pairs : ", unique_values)
                     uniqueAttrOccur = np.delete(uniqueAttrOccur, v-indexToDelete)
                     indexToDelete += 1
             unique_values = np.delete(unique_values, index, 1)
-            print("deleted pairs: ", unique_values)
+            # print("deleted pairs: ", unique_values)
             occurrence_count = np.delete(occurrence_count, index, 0)
 
             for k in range(0, len(uniqueAttrOccur)):
                 probabilities.append(occurrence_count[k]/uniqueAttrOccur[k])
                 probabilities.append(occurrence_count[k + len(uniqueAttrOccur)]/uniqueAttrOccur[k])
-                print("probabilities: ",probabilities)
+                # print("probabilities: ",probabilities)
                 entropies.append(-np.sum([p * math.log(p,2) for p in probabilities if p > 0]))
-            print("unique_values: ", unique_values)
-            print(occurrence_count)
-            print(uniqueAttrOccur)
-            print(entropies)
+            # print("unique_values: ", unique_values)
+            # print(occurrence_count)
+            # print(uniqueAttrOccur)
+            # print(entropies)
             break
         else:     
             probabilities.append(occurrence_count[i]/uniqueAttrOccur[i])
             probabilities.append(occurrence_count[i + len(uniqueAttrOccur)]/uniqueAttrOccur[i])
             entropies.append(-np.sum([p * math.log(p,2) for p in probabilities if p > 0]))
 
-    print(entropies)
+    # print(entropies)
     weightedEntropy = 0
     for i in range(0, len(uniqueAttrOccur)):
         weightedEntropy += ((uniqueAttrOccur[i]/np.sum(occurrence_count)) * entropies[i])
@@ -111,17 +111,18 @@ def generateTree(matrix, attributeList):
     node = []
        
     unique_values, occurrence_count = np.unique(matrix[[0]], return_counts=True)
- 
+    print("CLASS LABEL UNIQUE VALUES", unique_values)
+    print("CLASS LABEL COUNT" , occurrence_count)
     if (len(unique_values) == 1):
-        print("here1")
-        return unique_values
+        # print("here1")
+        return unique_values[0]
     elif (len(attributeList) == 1):
         if (occurrence_count[0] > occurrence_count[1]):
-            print("here2")
-            return [unique_values[0]]
-        else:
-            print("here3")
+            # print("here2")
             return [unique_values[1]]
+        else:
+            # print("here3")
+            return [unique_values[0]]
 
     entropies = []  
 
@@ -133,7 +134,7 @@ def generateTree(matrix, attributeList):
     minEntropyIndex = np.argmin(entropies) + 1
     testAttributeRow = matrix[[minEntropyIndex],:].tolist()
     matrix = np.delete(matrix, minEntropyIndex, 0)
-    print(matrix)
+    # print(matrix)
     node.append(attributeList[minEntropyIndex][0])
     # node.append({})
     # testAttributeDomain = [[],[1]]
@@ -148,16 +149,16 @@ def generateTree(matrix, attributeList):
 
     dict = {}
     for child in testAttributeDomain[1]:
-        print("COPIED MATRIX")
+        # print("COPIED MATRIX")
         matrixCopy = matrix.copy()
         removeIndex = []
-        print(matrixCopy.shape)
+        # print(matrixCopy.shape)
         for i in range(0, len(testAttributeRow[0])):
             if (testAttributeRow[0][i] == child):
                 # matrixCopy.append(matrix[:,[i]].tolist())
                 removeIndex.append(i)
         matrixCopy = np.delete(matrixCopy, removeIndex, 1)
-        print(matrixCopy.shape)
+        # print(matrixCopy.shape)
         # matrixArr = np.array(matrixCopy)
         # matrixArr = matrixArr.T
         # matrixArr = np.delete(matrixArr, 0 , 0)
