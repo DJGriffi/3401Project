@@ -1,3 +1,4 @@
+from enum import unique
 import json
 import math
 import numpy as np
@@ -36,6 +37,7 @@ def main():
     # m1 = np.array([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]])
     # a1 = [['RISK', [1,2]]]
     tree = generateTree(matrix, attributeList)
+    print(tree)
     # probabilities = occurrence_count / len(ageMatrix5[0])
     # print(probabilities)
     # print(calculateEntropy(ageMatrix))
@@ -43,7 +45,7 @@ def main():
 
     return 0
 
-def calculateEntropy(M, uniqueAttrValues, uniqueAttrOccur):
+def calculateEntropy(M, uniqueAttrValues, uniqueAttrOccur, attributeList, n):
     unique_values, occurrence_count = np.unique(M, return_counts = True, axis= 1)
     print(unique_values)
     print(occurrence_count)
@@ -52,14 +54,53 @@ def calculateEntropy(M, uniqueAttrValues, uniqueAttrOccur):
     print(uniqueAttrOccur)
     print()
     entropies = []
-    for i in range(0, len(uniqueAttrValues)):
+    print("LENGTH OF UNIQUEATTR %d" % len(uniqueAttrOccur))
+    for i in range(0, len(uniqueAttrOccur)):
         probabilities = []
-        probabilities.append(occurrence_count[i]/uniqueAttrOccur[i])
-        probabilities.append(occurrence_count[i + len(uniqueAttrValues)]/uniqueAttrOccur[i])
-        entropies.append(-np.sum([p * math.log(p,2) for p in probabilities if p > 0]))
+        if (len(occurrence_count) != (len(uniqueAttrOccur) * 2)):
+        # if ((len(occurrence_count) % 2) != 0):
+            print("HERE!!!!!!!!!!!!!!!!!!!!!")
+            # print(len(unique_values[0]))
+            domain = attributeList[n][1]
+            index = []
+            uniqueList = unique_values.tolist()
+            indexToDelete = 1
+            for v in domain:
+                count = 0
+                for j in range(0, len(unique_values[0])):
+                    if (uniqueList[0][j][1] == v):
+                        count += 1
+                        valIndex = j
+                if (count != 2):
+                    index.append(valIndex)
+                    print("Domain: ", domain)
+                    print("Domain Value: ", v)
+                    print("Attr Occurance: " ,uniqueAttrOccur)
+                    print("Unique Value Pairs : ", unique_values)
+                    uniqueAttrOccur = np.delete(uniqueAttrOccur, v-indexToDelete)
+                    indexToDelete += 1
+            unique_values = np.delete(unique_values, index, 1)
+            print("deleted pairs: ", unique_values)
+            occurrence_count = np.delete(occurrence_count, index, 0)
 
+            for k in range(0, len(uniqueAttrOccur)):
+                probabilities.append(occurrence_count[k]/uniqueAttrOccur[k])
+                probabilities.append(occurrence_count[k + len(uniqueAttrOccur)]/uniqueAttrOccur[k])
+                print("probabilities: ",probabilities)
+                entropies.append(-np.sum([p * math.log(p,2) for p in probabilities if p > 0]))
+            print("unique_values: ", unique_values)
+            print(occurrence_count)
+            print(uniqueAttrOccur)
+            print(entropies)
+            break
+        else:     
+            probabilities.append(occurrence_count[i]/uniqueAttrOccur[i])
+            probabilities.append(occurrence_count[i + len(uniqueAttrOccur)]/uniqueAttrOccur[i])
+            entropies.append(-np.sum([p * math.log(p,2) for p in probabilities if p > 0]))
+
+    print(entropies)
     weightedEntropy = 0
-    for i in range(0, len(uniqueAttrValues)):
+    for i in range(0, len(uniqueAttrOccur)):
         weightedEntropy += ((uniqueAttrOccur[i]/np.sum(occurrence_count)) * entropies[i])
 
     # probabilities = occurrence_count / len(M[0])
@@ -87,7 +128,7 @@ def generateTree(matrix, attributeList):
     for i in range(1, len(matrix)):
         m = np.stack((matrix[[0]], matrix[[i]]),axis=2)
         unique_values, occurrence_count = np.unique(matrix[[i]], return_counts=True)
-        entropies.append(calculateEntropy(m, unique_values, occurrence_count))
+        entropies.append(calculateEntropy(m, unique_values, occurrence_count, attributeList, i))
 
     minEntropyIndex = np.argmin(entropies) + 1
     testAttributeRow = matrix[[minEntropyIndex],:].tolist()
