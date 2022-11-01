@@ -38,6 +38,9 @@ def main():
     # a1 = [['RISK', [1,2]]]
     tree = generateTree(matrix, attributeList)
     print(tree)
+    with open("../data/tree.txt", "w") as f:
+        json.dump(tree, f)
+
     # probabilities = occurrence_count / len(ageMatrix5[0])
     # print(probabilities)
     # print(calculateEntropy(ageMatrix))
@@ -111,18 +114,25 @@ def generateTree(matrix, attributeList):
     node = []
        
     unique_values, occurrence_count = np.unique(matrix[[0]], return_counts=True)
-    print("CLASS LABEL UNIQUE VALUES", unique_values)
-    print("CLASS LABEL COUNT" , occurrence_count)
+    # print("CLASS LABEL UNIQUE VALUES", unique_values)
+    # print("CLASS LABEL COUNT" , occurrence_count)
+    # unique_values = unique_values.tolist()
     if (len(unique_values) == 1):
         # print("here1")
-        return unique_values[0]
+        # node.append(int(unique_values[0]))
+        return int(unique_values[0])
+        # return node
     elif (len(attributeList) == 1):
         if (occurrence_count[0] > occurrence_count[1]):
             # print("here2")
-            return [unique_values[1]]
+            return int(unique_values[1])
+            # node.append(int(unique_values[1]))
+            # return node
         else:
             # print("here3")
-            return [unique_values[0]]
+            return int(unique_values[0])
+            # node.append(int(unique_values[0]))
+            # return node
 
     entropies = []  
 
