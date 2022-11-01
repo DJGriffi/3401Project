@@ -19,6 +19,7 @@ def accuracy(tr, m, li):
     for i in range(np.size(m,axis=1)):
         if predict(tr, m[1:,i], li) == m[0,i]:
                    ac += 1
+    print(ac/np.size(m,axis=1))
     return ac/np.size(m,axis=1)
 
 
@@ -128,7 +129,7 @@ def showIt(fname):
         dispTree(tr,m,[],[],f)
                       
 def main(fname):
-    #with open('../data/treeFileFull.txt') as f:
+    # with open('../data/treeFileFull.txt') as f:
     #    tr = json.load(f)
     m1 = np.loadtxt('../data/train.txt', dtype=int)
     m2 = np.loadtxt('../data/test.txt', dtype=int)
@@ -141,3 +142,6 @@ def main(fname):
         json.dump(a,f)
     showIt('treeFilePruned.txt')
     return 'treeFilePruned.txt'
+
+if __name__ == "__main__":
+    main('tree.txt')
