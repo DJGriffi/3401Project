@@ -45,9 +45,8 @@ def calculateEntropy(M, uniqueAttrOccur, domain):
     for i in range(0, len(uniqueAttrOccur)):
         probabilities = []
 
-        if (len(occurrence_count) != (len(uniqueAttrOccur) * 2)): # check if each attribute domain value is paired with each 
-                                                                  # possible class label value and if not, remove them
-            # domain = attributeList[n][1]
+        if (len(occurrence_count) != (len(uniqueAttrOccur) * 2)): #check if each attribute domain value is paired with each 
+                                                                  #possible class label value and if not, remove them
             index = []
             uniqueList = unique_values.tolist()
             indexToDelete = 1
@@ -85,8 +84,7 @@ def calculateEntropy(M, uniqueAttrOccur, domain):
     for i in range(0, len(uniqueAttrOccur)):
         # weightedEntropy += ((uniqueAttrOccur[i]/np.sum(occurrence_count)) * entropies[i])
         weightedEntropy += ((uniqueAttrOccur[i]/dataLen) * entropies[i])
-        # print(np.sum(occurrence_count))
-    print(weightedEntropy)
+    
     return weightedEntropy
 
 
