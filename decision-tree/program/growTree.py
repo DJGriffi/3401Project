@@ -126,11 +126,11 @@ def generateTree(matrix, attributeList):
     minEntropyIndex = np.argmin(entropies) + 1 #select the test attribute with the lowest entropy, therefore providing the greatest information gain
     testAttributeRow = matrix[[minEntropyIndex],:].tolist()
     matrix = np.delete(matrix, minEntropyIndex, 0) #remove the selected test attribute from the training data set
-    node.append(attributeList[minEntropyIndex][0])
+    node.append(attributeList[minEntropyIndex][0]) #add attribute to name to node
     testAttributeDomain = attributeList.pop(minEntropyIndex) #remove the selected test attribute from the attribute list
 
     dict = {}
-    for child in testAttributeDomain[1]: #for each value in the selected test attribute grow the decision tree.
+    for child in testAttributeDomain[1]: #for each value in the selected test attribute domain, grow the decision tree.
         matrixCopy = matrix.copy()
         removeIndex = []
 
