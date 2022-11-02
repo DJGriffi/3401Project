@@ -3,11 +3,11 @@ CRED_HIS
  !          !--youth--INCOME
  !          !           !--low--HEALTH
  !          !           !         !--normal--RACE
- !          !           !         !            !--white--L
+ !          !           !         !            !--white--H
  !          !           !         !            !--asian--H
  !          !           !         !            !--black--H
  !          !           !         !--poor--H
- !          !           !--high--L
+ !          !           !--high--H
  !          !--mid_age--H
- !          !--senior--H
+ !          !--senior--L
  !--good--L

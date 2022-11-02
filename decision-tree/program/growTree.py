@@ -110,10 +110,10 @@ def generateTree(matrix, attributeList):
 
     elif (len(attributeList) == 1):
         if (occurrence_count[0] > occurrence_count[1]):
-            return int(unique_values[1])
+            return int(unique_values[0])
           
         else:
-            return int(unique_values[0])
+            return int(unique_values[1])
 
     entropies = []  
 
@@ -134,9 +134,9 @@ def generateTree(matrix, attributeList):
         matrixCopy = matrix.copy()
         removeIndex = []
 
-        for i in range(0, len(testAttributeRow[0])):
-            if (testAttributeRow[0][i] == child):
-                removeIndex.append(i)
+        for i in range(0, len(testAttributeRow[0])): 
+            if (testAttributeRow[0][i] != child): #find the columns that dont have the child's value and remove them from the
+                removeIndex.append(i)             #characteristic data set
         matrixCopy = np.delete(matrixCopy, removeIndex, 1)       
         childNode = generateTree(matrixCopy, attributeList)
         dict.update({child: childNode})
