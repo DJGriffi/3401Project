@@ -5,9 +5,6 @@ import json
 # where fname is the file in which a (full or pruned) decision tree is saved.  
 # The function returns the accuracy of the decision tree when running on the test set.
 #
-# Create  evaluate.py,  and  run  evaluate.main(fname1)  where  fname1  is  the  file  name  in 
-# which you save your fully-grown decision tree, and print the accuracy in the IDLE shell
-#
 
 def predict(tr, r, li): # using same functions from pruneTree class
     if type(tr) != list:
