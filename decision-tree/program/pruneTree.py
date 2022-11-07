@@ -19,7 +19,6 @@ def accuracy(tr, m, li):
     for i in range(np.size(m,axis=1)):
         if predict(tr, m[1:,i], li) == m[0,i]:
                    ac += 1
-    print(ac/np.size(m,axis=1))
     return ac/np.size(m,axis=1)
 
 
