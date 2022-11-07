@@ -45,10 +45,10 @@ def showIt(fname):
             dispTree(tr,m,[],[],f)
 
 """ I added this main and it will need to be removed"""
-def main():
-    showIt("../data/tree.txt")
+# def main():
+#     showIt("../data/tree.txt")
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
     

@@ -39,5 +39,5 @@ def main(fname):
     
     print("The accuracy of decision tree at <"+fname+"> is", acc*100,"%")
 
-if __name__ == "__main__":
-    main('tree.txt')
+# if __name__ == "__main__":
+#     main('tree.txt')

@@ -16,7 +16,7 @@ def main():
     with open("../data/tree.txt", "w") as f:
         json.dump(tree, f)
 
-    return 0
+    return "tree.txt"
 
     
 def calculateEntropy(M, uniqueAttrOccur, domain):
@@ -142,5 +142,5 @@ def generateTree(matrix, attributeList):
     node.append(dict)
     return node
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

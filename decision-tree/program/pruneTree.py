@@ -142,6 +142,3 @@ def main(fname):
         json.dump(a,f)
     showIt('treeFilePruned.txt')
     return 'treeFilePruned.txt'
-
-if __name__ == "__main__":
-    main('tree.txt')
